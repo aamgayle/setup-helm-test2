@@ -5450,7 +5450,7 @@ function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
         const getHelmScriptPath = yield tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3');
         fs.chmodSync(getHelmScriptPath, '700');
-        var runGetHelmScript = (0, child_process_1.exec)('bash ./get_helm.sh help', (error, stdout, stderr) => {
+        var runGetHelmScript = (0, child_process_1.exec)(`${getHelmScriptPath}`, (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
             if (error !== null) {
