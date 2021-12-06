@@ -5451,8 +5451,9 @@ const child_process_1 = __nccwpck_require__(81);
 // const fs = require('fs');
 function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
-        const getHelmScriptPath = yield tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3', "./helm_script");
+        const getHelmScriptPath = yield tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3');
         fs.chmodSync(getHelmScriptPath, '700');
+        console.log("Current getHelmScriptPath === " + getHelmScriptPath);
         var runGetHelmScript = (0, child_process_1.exec)(util.format('bash ./', getHelmScriptPath), (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
