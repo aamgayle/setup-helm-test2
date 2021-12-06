@@ -5446,12 +5446,16 @@ const tc = __importStar(__nccwpck_require__(669));
 const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(342));
 const child_process_1 = __nccwpck_require__(81);
-// const { exec } = require('child_process');
-// const tc = require('@actions/tool-cache');
-// const fs = require('fs');
+const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
-        const getHelmScriptPath = yield tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3');
+        let getHelmScriptPath;
+        try {
+            getHelmScriptPath = yield tc.downloadTool(getHelmDownloadUrl);
+        }
+        catch (e) {
+            throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
+        }
         fs.chmodSync(getHelmScriptPath, '700');
         console.log("Current getHelmScriptPath === " + getHelmScriptPath);
         var runGetHelmScript = (0, child_process_1.exec)(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {

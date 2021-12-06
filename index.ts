@@ -4,12 +4,17 @@ import * as util from 'util';
 import * as core from '@actions/core'
 import {exec} from 'child_process';
 
-// const { exec } = require('child_process');
-// const tc = require('@actions/tool-cache');
-// const fs = require('fs');
+const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 
 export async function getHelmTry(): Promise<string> {
-    const getHelmScriptPath =  await tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3');
+    let getHelmScriptPath;
+    
+    try{
+        getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl);
+    } catch(e){
+        throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl))
+    }
+    
     fs.chmodSync(getHelmScriptPath, '700');
     console.log("Current getHelmScriptPath === " + getHelmScriptPath);
     var runGetHelmScript = exec(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
