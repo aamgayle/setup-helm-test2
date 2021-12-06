@@ -8,8 +8,8 @@ import {exec} from 'child_process';
 // const fs = require('fs');
 
 export async function getHelmTry(): Promise<string> {
-    const getHelmScriptPath =  await tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3', "./");
-    fs.chmodSync("./get_helm.sh", '700');
+    const getHelmScriptPath =  await tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3', "./helm_script");
+    fs.chmodSync("./helm_script/get_helm.sh", '700');
     var runGetHelmScript = exec(`./get_helm.sh`, (error, stdout, stderr) => {
     console.log(stdout);
     console.log(stderr);
