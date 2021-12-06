@@ -9,14 +9,14 @@ import {exec} from 'child_process';
 
 export async function getHelmTry(): Promise<string> {
     const getHelmScriptPath =  await tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3');
-    fs.chmodSync(getHelmScriptPath, '700');
+    fs.chmodSync(getHelmScriptPath + "--v v3.7.0", '700');
     var runGetHelmScript = exec(`${getHelmScriptPath}`, (error, stdout, stderr) => {
     console.log(stdout);
     console.log(stderr);
     if(error !== null){
         console.log(`exec error: ${error}`);
         return "NOT COMPLETE";
-    }
+        }
     });
 
     return "COMPLETE";
