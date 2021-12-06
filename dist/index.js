@@ -5457,7 +5457,7 @@ function getHelmTry() {
             console.log(stderr);
             if (error !== null) {
                 console.log(`exec error: ${error}`);
-                return "NOT COMPLETE";
+                throw new Error("NOT COMPLETE");
             }
         });
         return "COMPLETE";

@@ -15,7 +15,7 @@ export async function getHelmTry(): Promise<string> {
     console.log(stderr);
     if(error !== null){
         console.log(`exec error: ${error}`);
-        return "NOT COMPLETE";
+        throw new Error("NOT COMPLETE");
         }
     });
 
