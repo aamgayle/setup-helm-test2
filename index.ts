@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as tc from '@actions/tool-cache';
+import * as util from 'util';
 import * as core from '@actions/core'
 import {exec} from 'child_process';
 
@@ -9,8 +10,8 @@ import {exec} from 'child_process';
 
 export async function getHelmTry(): Promise<string> {
     const getHelmScriptPath =  await tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3', "./helm_script");
-    fs.chmodSync("./helm_script/get_helm.sh", '700');
-    var runGetHelmScript = exec(`./get_helm.sh`, (error, stdout, stderr) => {
+    fs.chmodSync(getHelmScriptPath, '700');
+    var runGetHelmScript = exec(util.format('bash ./', getHelmScriptPath), (error, stdout, stderr) => {
     console.log(stdout);
     console.log(stderr);
     if(error !== null){

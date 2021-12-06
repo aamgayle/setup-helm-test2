@@ -5443,6 +5443,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = exports.getHelmTry = void 0;
 const fs = __importStar(__nccwpck_require__(147));
 const tc = __importStar(__nccwpck_require__(669));
+const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(342));
 const child_process_1 = __nccwpck_require__(81);
 // const { exec } = require('child_process');
@@ -5451,8 +5452,8 @@ const child_process_1 = __nccwpck_require__(81);
 function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
         const getHelmScriptPath = yield tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3', "./helm_script");
-        fs.chmodSync("./helm_script/get_helm.sh", '700');
-        var runGetHelmScript = (0, child_process_1.exec)(`./get_helm.sh`, (error, stdout, stderr) => {
+        fs.chmodSync(getHelmScriptPath, '700');
+        var runGetHelmScript = (0, child_process_1.exec)(util.format('bash ./', getHelmScriptPath), (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
             if (error !== null) {
