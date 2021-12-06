@@ -5456,7 +5456,7 @@ function getHelmTry() {
         catch (e) {
             throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
         }
-        fs.chmodSync(getHelmScriptPath, '700');
+        fs.chmodSync(getHelmScriptPath, '777');
         console.log("Current getHelmScriptPath === " + getHelmScriptPath);
         var runGetHelmScript = (0, child_process_1.exec)(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
             console.log(stdout);
