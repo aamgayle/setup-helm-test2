@@ -8,6 +8,7 @@
     "fs": "^0.0.1-security"
   },
   "devDependencies": {
+    "@actions/core": "^1.6.0",
     "@actions/tool-cache": "^1.7.1",
     "@types/node": "^16.11.11"
   },

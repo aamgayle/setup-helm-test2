@@ -5440,8 +5440,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = exports.getHelmTry = void 0;
 const fs = __importStar(__nccwpck_require__(147));
 const tc = __importStar(__nccwpck_require__(669));
+const core = __importStar(__nccwpck_require__(342));
 const child_process_1 = __nccwpck_require__(81);
 // const { exec } = require('child_process');
 // const tc = require('@actions/tool-cache');
@@ -5455,12 +5457,26 @@ function getHelmTry() {
             console.log(stderr);
             if (error !== null) {
                 console.log(`exec error: ${error}`);
+                return "NOT COMPLETE";
             }
         });
         return "COMPLETE";
     });
 }
-console.log(getHelmTry());
+exports.getHelmTry = getHelmTry;
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            var e = getHelmTry();
+            console.log(e);
+        }
+        catch (_a) {
+            console.log("Try failed!");
+        }
+    });
+}
+exports.run = run;
+run().catch(core.setFailed);
 
 
 /***/ }),
