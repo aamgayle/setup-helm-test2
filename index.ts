@@ -18,6 +18,7 @@ export async function getHelmTry(): Promise<string> {
     fs.chmodSync(getHelmScriptPath, '777');
     console.log("Current getHelmScriptPath === " + getHelmScriptPath);
     try{
+        console.log(process.cwd());
         exec(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);

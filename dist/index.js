@@ -5459,6 +5459,7 @@ function getHelmTry() {
         fs.chmodSync(getHelmScriptPath, '777');
         console.log("Current getHelmScriptPath === " + getHelmScriptPath);
         try {
+            console.log(process.cwd());
             (0, child_process_1.exec)(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
