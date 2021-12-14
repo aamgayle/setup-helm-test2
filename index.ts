@@ -17,14 +17,15 @@ export async function getHelmTry(): Promise<string> {
     
     fs.chmodSync(getHelmScriptPath, '777');
     console.log("Current getHelmScriptPath === " + getHelmScriptPath);
-    var runGetHelmScript = exec(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
-    console.log(stdout);
-    console.log(stderr);
-    if(error !== null){
-        console.log(`exec error: ${error}`);
+    try{
+        var runGetHelmScript = exec(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+        });
+    } catch (e){
+        console.log(`exec error: ${e}`);
         throw new Error("NOT COMPLETE");
-        }
-    });
+    }
 
     return "COMPLETE";
 }

@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,59 +27,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-exports.__esModule = true;
-var fs = require("fs");
-var tc = require("@actions/tool-cache");
-var child_process_1 = require("child_process");
-// const { exec } = require('child_process');
-// const tc = require('@actions/tool-cache');
-// const fs = require('fs');
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.run = exports.getHelmTry = void 0;
+const fs = __importStar(require("fs"));
+const tc = __importStar(require("@actions/tool-cache"));
+const util = __importStar(require("util"));
+const core = __importStar(require("@actions/core"));
+const child_process_1 = require("child_process");
+const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 function getHelmTry() {
-    return __awaiter(this, void 0, void 0, function () {
-        var getHelmScriptPath, runGetHelmScript;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, tc.downloadTool('https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3')];
-                case 1:
-                    getHelmScriptPath = _a.sent();
-                    fs.chmodSync(getHelmScriptPath, '700');
-                    runGetHelmScript = (0, child_process_1.exec)('bash ./get_helm.sh help', function (error, stdout, stderr) {
-                        console.log(stdout);
-                        console.log(stderr);
-                        if (error !== null) {
-                            console.log("exec error: ".concat(error));
-                        }
-                    });
-                    return [2 /*return*/, "COMPLETE"];
+    return __awaiter(this, void 0, void 0, function* () {
+        let getHelmScriptPath;
+        try {
+            getHelmScriptPath = yield tc.downloadTool(getHelmDownloadUrl);
+        }
+        catch (e) {
+            throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
+        }
+        fs.chmodSync(getHelmScriptPath, '777');
+        console.log("Current getHelmScriptPath === " + getHelmScriptPath);
+        var runGetHelmScript = (0, child_process_1.exec)(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+            if (error !== null) {
+                console.log(`exec error: ${error}`);
+                throw new Error("NOT COMPLETE");
             }
         });
+        return "COMPLETE";
     });
 }
-console.log(getHelmTry());
+exports.getHelmTry = getHelmTry;
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            var e = getHelmTry();
+            console.log(e);
+        }
+        catch (_a) {
+            console.log("Try failed!");
+        }
+    });
+}
+exports.run = run;
+run().catch(core.setFailed);
