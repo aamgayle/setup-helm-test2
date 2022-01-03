@@ -20,7 +20,7 @@ export async function getHelmTry(): Promise<string> {
     console.log(fs.existsSync(getHelmScriptPath));
     try{
         console.log(process.cwd());
-        exec(util.format('bash .%s', getHelmScriptPath), (error, stdout, stderr) => {
+        exec(util.format('bash %s', getHelmScriptPath), (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
         });
