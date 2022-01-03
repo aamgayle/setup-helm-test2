@@ -5450,13 +5450,21 @@ const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scr
 const helmToolName = "helm";
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
+        let helmPath;
+        // try{
+        //     var e = getHelmTry();
+        //     console.log("testing");
+        //     console.log(e);
+        // } catch {
+        //     console.log("Try failed!");
+        // }
         try {
-            var e = getHelmTry();
-            console.log("testing");
-            console.log(e);
+            helmPath = tc.find(helmToolName, 'v.3.7.2');
+            console.log("This is the helmPath " + helmPath);
         }
-        catch (_a) {
-            console.log("Try failed!");
+        catch (e) {
+            console.log("error while trying to find helm path");
+            throw new Error("HELM PATH CANNOT BE FOUND");
         }
     });
 }
@@ -5464,7 +5472,6 @@ exports.run = run;
 function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
         let getHelmScriptPath;
-        let helmPath;
         try {
             getHelmScriptPath = yield tc.downloadTool(getHelmDownloadUrl);
         }
@@ -5484,14 +5491,6 @@ function getHelmTry() {
         catch (e) {
             console.log(`exec error: ${e}`);
             throw new Error("NOT COMPLETE");
-        }
-        try {
-            helmPath = tc.find(helmToolName, 'v.3.7.2');
-            console.log("This is the helmPath " + helmPath);
-        }
-        catch (e) {
-            console.log("error while trying to find helm path");
-            throw new Error("HELM PATH CANNOT BE FOUND");
         }
         return "COMPLETE";
     });

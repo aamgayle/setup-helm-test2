@@ -8,18 +8,26 @@ const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scr
 const helmToolName = "helm";
 
 export async function run() {
+    let helmPath;
+
+    // try{
+    //     var e = getHelmTry();
+    //     console.log("testing");
+    //     console.log(e);
+    // } catch {
+    //     console.log("Try failed!");
+    // }
     try{
-        var e = getHelmTry();
-        console.log("testing");
-        console.log(e);
-    } catch {
-        console.log("Try failed!");
+        helmPath = tc.find(helmToolName, 'v.3.7.2');
+        console.log("This is the helmPath " + helmPath);
+    } catch (e) {
+        console.log("error while trying to find helm path");
+        throw new Error("HELM PATH CANNOT BE FOUND");
     }
 }
 
 export async function getHelmTry(): Promise<string> {
     let getHelmScriptPath;
-    let helmPath;
 
     try{
         getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl);
@@ -40,15 +48,6 @@ export async function getHelmTry(): Promise<string> {
         console.log(`exec error: ${e}`);
         throw new Error("NOT COMPLETE");
     }
-
-    try{
-        helmPath = tc.find(helmToolName, 'v.3.7.2');
-        console.log("This is the helmPath " + helmPath);
-    } catch (e) {
-        console.log("error while trying to find helm path");
-        throw new Error("HELM PATH CANNOT BE FOUND");
-    }
-    
     
     return "COMPLETE";
 }
