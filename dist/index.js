@@ -5440,13 +5440,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = exports.getHelmTry = void 0;
+exports.getHelmTry = exports.run = void 0;
 const fs = __importStar(__nccwpck_require__(147));
 const tc = __importStar(__nccwpck_require__(428));
 const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(728));
 const child_process_1 = __nccwpck_require__(81);
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            var e = getHelmTry();
+            console.log(e);
+        }
+        catch (_a) {
+            console.log("Try failed!");
+        }
+    });
+}
+exports.run = run;
 function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
         let getHelmScriptPath;
@@ -5456,7 +5468,7 @@ function getHelmTry() {
         catch (e) {
             throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
         }
-        fs.chmodSync(getHelmScriptPath, '777');
+        fs.chmodSync(getHelmScriptPath, '744');
         console.log("Current getHelmScriptPath === " + getHelmScriptPath);
         console.log(fs.existsSync(getHelmScriptPath));
         try {
@@ -5474,18 +5486,6 @@ function getHelmTry() {
     });
 }
 exports.getHelmTry = getHelmTry;
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            var e = getHelmTry();
-            console.log(e);
-        }
-        catch (_a) {
-            console.log("Try failed!");
-        }
-    });
-}
-exports.run = run;
 run().catch(core.setFailed);
 
 

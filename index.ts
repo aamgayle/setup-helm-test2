@@ -6,6 +6,15 @@ import {exec} from 'child_process';
 
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 
+export async function run() {
+    try{
+        var e = getHelmTry();
+        console.log(e);
+    } catch {
+        console.log("Try failed!");
+    }
+}
+
 export async function getHelmTry(): Promise<string> {
     let getHelmScriptPath;
 
@@ -15,7 +24,7 @@ export async function getHelmTry(): Promise<string> {
         throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl))
     }
     
-    fs.chmodSync(getHelmScriptPath, '777');
+    fs.chmodSync(getHelmScriptPath, '744');
     console.log("Current getHelmScriptPath === " + getHelmScriptPath);
     console.log(fs.existsSync(getHelmScriptPath));
     try{
@@ -32,13 +41,5 @@ export async function getHelmTry(): Promise<string> {
     return "COMPLETE";
 }
 
-export async function run() {
-    try{
-        var e = getHelmTry();
-        console.log(e);
-    } catch {
-        console.log("Try failed!");
-    }
-}
 
 run().catch(core.setFailed);
