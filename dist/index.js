@@ -5451,6 +5451,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             var e = getHelmTry();
+            console.log("testing");
             console.log(e);
         }
         catch (_a) {

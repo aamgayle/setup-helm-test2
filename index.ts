@@ -9,6 +9,7 @@ const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scr
 export async function run() {
     try{
         var e = getHelmTry();
+        console.log("testing");
         console.log(e);
     } catch {
         console.log("Try failed!");
@@ -40,6 +41,5 @@ export async function getHelmTry(): Promise<string> {
 
     return "COMPLETE";
 }
-
 
 run().catch(core.setFailed);
