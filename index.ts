@@ -5,6 +5,7 @@ import * as core from '@actions/core'
 import {exec} from 'child_process';
 
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
+const helmToolName = "helm";
 
 export async function run() {
     try{
@@ -18,6 +19,7 @@ export async function run() {
 
 export async function getHelmTry(): Promise<string> {
     let getHelmScriptPath;
+    let helmPath;
 
     try{
         getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl);
@@ -39,6 +41,15 @@ export async function getHelmTry(): Promise<string> {
         throw new Error("NOT COMPLETE");
     }
 
+    try{
+        helmPath = tc.find(helmToolName, 'v.3.7.2');
+        console.log("This is the helmPath " + helmPath);
+    } catch (e) {
+        console.log("error while trying to find helm path");
+        throw new Error("HELM PATH CANNOT BE FOUND");
+    }
+    
+    
     return "COMPLETE";
 }
 

@@ -5447,6 +5447,7 @@ const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(728));
 const child_process_1 = __nccwpck_require__(81);
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
+const helmToolName = "helm";
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -5463,6 +5464,7 @@ exports.run = run;
 function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
         let getHelmScriptPath;
+        let helmPath;
         try {
             getHelmScriptPath = yield tc.downloadTool(getHelmDownloadUrl);
         }
@@ -5482,6 +5484,14 @@ function getHelmTry() {
         catch (e) {
             console.log(`exec error: ${e}`);
             throw new Error("NOT COMPLETE");
+        }
+        try {
+            helmPath = tc.find(helmToolName, 'v.3.7.2');
+            console.log("This is the helmPath " + helmPath);
+        }
+        catch (e) {
+            console.log("error while trying to find helm path");
+            throw new Error("HELM PATH CANNOT BE FOUND");
         }
         return "COMPLETE";
     });
