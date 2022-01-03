@@ -24,7 +24,7 @@ export async function getHelmTry(): Promise<string> {
         throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl))
     }
     
-    fs.chmodSync(getHelmScriptPath, '744');
+    fs.chmodSync(getHelmScriptPath, '666');
     console.log("Current getHelmScriptPath === " + getHelmScriptPath);
     console.log(fs.existsSync(getHelmScriptPath));
     try{
