@@ -5,10 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to install helm
     steps:
+      # To use this repository's private action,
+      # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
-      with:
-        version: 'v'
+        with:
+          version:  
