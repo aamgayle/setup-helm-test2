@@ -21,6 +21,10 @@ export async function run() {
     try{
         helmPath = tc.find(helmToolName, 'v.3.7.2');
         console.log("This is the helmPath " + helmPath);
+        exec(util.format('bash %s', 'helm version'), (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+        });
     } catch (e) {
         console.log("error while trying to find helm path");
         throw new Error("HELM PATH CANNOT BE FOUND");
