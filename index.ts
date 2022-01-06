@@ -6,6 +6,7 @@ import {exec} from 'child_process';
 
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 const helmToolName = "helm";
+const INPUT_VERSION = core.getInput('version', {'required': true});
 
 export async function run() {
     let helmPath;
@@ -32,7 +33,7 @@ export async function getHelmTry(): Promise<string> {
     try{
         getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl);
     } catch(e){
-        throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl))
+        throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
     }
     
     fs.chmodSync(getHelmScriptPath, '755');
@@ -40,10 +41,18 @@ export async function getHelmTry(): Promise<string> {
     console.log(fs.existsSync(getHelmScriptPath));
     try{
         console.log(process.cwd());
-        exec(util.format('bash %s', getHelmScriptPath), (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-        });
+        if(INPUT_VERSION != 'v'){
+            exec(util.format('bash %s --v %s', getHelmScriptPath, INPUT_VERSION), (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+        } else {
+            exec(util.format('bash %s', getHelmScriptPath), (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+        }
+
     } catch (e){
         console.log(`exec error: ${e}`);
         throw new Error("NOT COMPLETE");

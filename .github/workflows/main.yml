@@ -13,4 +13,8 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          version: 
+    inputs:
+      version:
+        description: 'The desired version of Helm'
+        required: true
+        default: ""

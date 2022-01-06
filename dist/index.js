@@ -5448,6 +5448,7 @@ const core = __importStar(__nccwpck_require__(728));
 const child_process_1 = __nccwpck_require__(81);
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 const helmToolName = "helm";
+const INPUT_VERSION = core.getInput('version', { 'required': true });
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         let helmPath;
@@ -5483,10 +5484,18 @@ function getHelmTry() {
         console.log(fs.existsSync(getHelmScriptPath));
         try {
             console.log(process.cwd());
-            (0, child_process_1.exec)(util.format('bash %s', getHelmScriptPath), (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
+            if (INPUT_VERSION != 'v') {
+                (0, child_process_1.exec)(util.format('bash %s --v %s', getHelmScriptPath, INPUT_VERSION), (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
+            else {
+                (0, child_process_1.exec)(util.format('bash %s', getHelmScriptPath), (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
         }
         catch (e) {
             console.log(`exec error: ${e}`);
