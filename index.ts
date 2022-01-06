@@ -6,7 +6,7 @@ import {exec} from 'child_process';
 
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 const helmToolName = "helm";
-const INPUT_VERSION = core.getInput('version', {'required': true});
+const INPUT_VERSION:string = core.getInput('version', {required: true});
 
 export async function run() {
     let helmPath;
