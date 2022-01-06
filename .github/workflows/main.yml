@@ -12,7 +12,6 @@ jobs:
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
-        with:
     inputs:
       version:
         description: 'The desired version of Helm'
