@@ -17,4 +17,4 @@ jobs:
       version:
         description: 'The desired version of Helm'
         required: true
-        default: ""
+        default: "v"
