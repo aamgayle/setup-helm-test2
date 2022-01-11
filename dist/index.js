@@ -2878,6 +2878,7 @@ function setupHelmViaShell() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield exec.exec('curl', ['-o', 'get_helm.sh', HELM_SCRIPT_URL]);
+            yield exec.exec('ls');
         }
         catch (e) {
             console.log(`exec error: ${e}`);

@@ -18,6 +18,7 @@ export async function run() {
 export async function setupHelmViaShell(): Promise<void> {
     try{
         await exec.exec('curl', ['-o', 'get_helm.sh', HELM_SCRIPT_URL]);
+        await exec.exec('ls');
     } catch (e){
         console.log(`exec error: ${e}`);
     }
