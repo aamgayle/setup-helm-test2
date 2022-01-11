@@ -1622,7 +1622,7 @@ function run() {
         //     console.log(stderr);
         // });
         try {
-            runHelmScript();
+            downloadHelmScript();
             console.log("COMPLETE");
         }
         catch (e) {

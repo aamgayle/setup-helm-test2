@@ -36,7 +36,7 @@ export async function run() {
     //     console.log(stderr);
     // });
     try{
-        runHelmScript();
+        downloadHelmScript();
         console.log("COMPLETE");
     } catch(e){
         throw new Error(util.format("Failed to run bash scripts from %s", "getHelmTry()"));
