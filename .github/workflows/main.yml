@@ -9,17 +9,7 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - run: | 
-          curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-          chmod 700 get_helm.sh
-          if [ $version == "x" ] 
-          then 
-            ./get_helm.sh
-          else 
-            ./get_helm.sh --version $version
-          fi 
-        shell: bash
-        env:
+        with:
           version: "v3.6.0" #Add desired version in format "vX.X.X" otherwise will default to latest helm version
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory

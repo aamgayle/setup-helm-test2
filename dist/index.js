@@ -5441,7 +5441,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getHelmTry = exports.run = void 0;
-const fs = __importStar(__nccwpck_require__(147));
 const tc = __importStar(__nccwpck_require__(428));
 const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(728));
@@ -5487,23 +5486,26 @@ function getHelmTry() {
         catch (e) {
             throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
         }
-        fs.chmodSync(getHelmScriptPath, '755');
-        console.log("Current getHelmScriptPath === " + getHelmScriptPath);
-        console.log(fs.existsSync(getHelmScriptPath));
         try {
             console.log(process.cwd());
-            if (INPUT_VERSION != 'v') {
-                (0, child_process_1.exec)(util.format('bash %s --v %s', getHelmScriptPath, INPUT_VERSION), (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
-            }
-            else {
-                (0, child_process_1.exec)(util.format('bash %s', getHelmScriptPath), (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
-            }
+            (0, child_process_1.exec)("curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3", (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+            (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+            (0, child_process_1.exec)(`
+        if [ $version == "x" ] 
+        then 
+          ./get_helm.sh
+        else 
+          ./get_helm.sh --version v3.6.0
+        fi `, (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
         }
         catch (e) {
             console.log(`exec error: ${e}`);
@@ -5513,6 +5515,43 @@ function getHelmTry() {
     });
 }
 exports.getHelmTry = getHelmTry;
+// export async function getHelmTry(): Promise<string> {
+//     let getHelmScriptPath;
+//     try{
+//         getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl, "./");
+//     } catch(e){
+//         throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
+//     }
+//     fs.chmodSync(getHelmScriptPath, '755');
+//     console.log("Current getHelmScriptPath === " + getHelmScriptPath);
+//     console.log(fs.existsSync(getHelmScriptPath));
+//     try{
+//         console.log(process.cwd());
+//         if(INPUT_VERSION != 'v'){
+//             exec(util.format('bash %s --v %s', getHelmScriptPath, INPUT_VERSION), (error, stdout, stderr) => {
+//                 console.log(stdout);
+//                 console.log(stderr);
+//             });
+//         } else {
+//             exec(util.format('bash %s', getHelmScriptPath), (error, stdout, stderr) => {
+//                 console.log(stdout);
+//                 console.log(stderr);
+//             });
+//         }
+//     } catch (e){
+//         console.log(`exec error: ${e}`);
+//         throw new Error("NOT COMPLETE");
+//     }
+//     return "COMPLETE";
+// }
+//curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+// chmod 700 get_helm.sh
+// if [ $version == "x" ] 
+// then 
+//   ./get_helm.sh
+// else 
+//   ./get_helm.sh --version $version
+// fi 
 run().catch(core.setFailed);
 
 
