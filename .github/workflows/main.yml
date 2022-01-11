@@ -15,7 +15,7 @@ jobs:
           ./get_helm.sh --version $version
         shell: bash
         env:
-          version: x #Add desired version in format "vX.X.X" otherwise will default to latest helm version      - name: Setup Helm
+          version: "latest" #Add desired version in format "vX.X.X" otherwise will default to latest helm version      - name: Setup Helm
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
