@@ -12,7 +12,8 @@ jobs:
       - run: | 
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
-          apt list --installed
+          helm ls --all --short | xargs -L1 helm delete --purge
+          helm
         shell: bash
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
