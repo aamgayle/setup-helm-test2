@@ -81,7 +81,7 @@ jobs:
       - run: |
           helm version
         shell: bash
-    windows-latest-test:
+  windows-latest-test:
     runs-on: windows-2022
     name: A job to install helm on a windows 2022 runner
     steps:
