@@ -5502,7 +5502,7 @@ function getHelmTry() {
             }
         }
         catch (e) {
-            ~console.log(`exec error: ${e}`);
+            console.log(`exec error: ${e}`);
             throw new Error("NOT COMPLETE");
         }
         return "COMPLETE";

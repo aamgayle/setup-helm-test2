@@ -57,7 +57,7 @@ export async function getHelmTry(): Promise<string> {
             });
         }
 
-    } catch (e){~
+    } catch (e){
         console.log(`exec error: ${e}`);
         throw new Error("NOT COMPLETE");
     }
