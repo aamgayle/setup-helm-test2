@@ -1595,7 +1595,7 @@ const core = __importStar(__nccwpck_require__(728));
 const child_process_1 = __nccwpck_require__(81);
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 const helmToolName = "helm";
-const INPUT_VERSION = "x";
+const INPUT_VERSION = "v3.6.0";
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {

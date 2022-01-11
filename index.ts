@@ -6,7 +6,7 @@ import {exec} from 'child_process';
 
 const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 const helmToolName = "helm";
-const INPUT_VERSION:string = "x";
+const INPUT_VERSION:string = "v3.6.0";
 
 export async function run() {
     try{
@@ -36,6 +36,7 @@ export async function runHelmScript(): Promise<void> {
             console.log(stdout);
             console.log(stderr);
         });
+
         if(INPUT_VERSION == "x"){
             exec('./get_helm.sh', (error, stdout, stderr) => {
                 console.log(stdout);
