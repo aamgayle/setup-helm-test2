@@ -1631,16 +1631,18 @@ function runHelmScript() {
                 console.log(stdout);
                 console.log(stderr);
             });
-            (0, child_process_1.exec)(`
-        if [ ${INPUT_VERSION} == "x" ] 
-        then 
-            ./get_helm.sh
-        else 
-            ./get_helm.sh --version v3.6.0
-        fi `, (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
+            if (INPUT_VERSION == "x") {
+                (0, child_process_1.exec)('./get_helm.sh', (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
+            else {
+                (0, child_process_1.exec)(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
         }
         catch (e) {
             console.log(`exec error: ${e}`);

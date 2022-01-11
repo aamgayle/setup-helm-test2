@@ -36,16 +36,17 @@ export async function runHelmScript(): Promise<void> {
             console.log(stdout);
             console.log(stderr);
         });
-        exec(`
-        if [ ${INPUT_VERSION} == "x" ] 
-        then 
-            ./get_helm.sh
-        else 
-            ./get_helm.sh --version v3.6.0
-        fi `, (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-        });
+        if(INPUT_VERSION == "x"){
+            exec('./get_helm.sh', (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+        } else {
+            exec(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+        }
         
     } catch(e){
         console.log(`exec error: ${e}`);
