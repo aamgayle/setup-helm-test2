@@ -1639,6 +1639,7 @@ function downloadHelmScript() {
             (0, child_process_1.exec)("curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3", (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
+                runHelmScript();
             });
         }
         catch (e) {
@@ -1653,25 +1654,20 @@ function runHelmScript() {
     return __awaiter(this, void 0, void 0, function* () {
         let results = yield downloadHelmScript();
         try {
-            if (results === "Proceed") {
-                (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
-                (0, child_process_1.exec)(`
-            if [ $version == "x" ] 
-            then 
-                ./get_helm.sh
-            else 
-                ./get_helm.sh --version v3.6.0
-            fi `, (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
-            }
-            else {
-                console.log("FAILED");
-            }
+            (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+            (0, child_process_1.exec)(`
+        if [ $version == "x" ] 
+        then 
+            ./get_helm.sh
+        else 
+            ./get_helm.sh --version v3.6.0
+        fi `, (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
         }
         catch (e) {
             console.log(`exec error: ${e}`);
