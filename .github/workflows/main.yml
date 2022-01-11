@@ -14,3 +14,6 @@ jobs:
         id: hello
         with:
           version: "v"
+
+
+          #Look into splitting up into multiple action files: One to download the .sh for helm (or anything) and one to execute it
