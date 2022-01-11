@@ -1,7 +1,7 @@
 import * as os from 'os';
 import * as util from 'util';
-import * as core from '@actions/core'
-import {exec} from 'child_process';
+import * as core from '@actions/core';
+import * as exec from '@actions/exec';
 
 const HELM_SCRIPT_URL = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
 const INPUT_VERSION:string = core.getInput('version', { 'required': true });
@@ -17,11 +17,7 @@ export async function run() {
 
 export async function setupHelmViaShell(): Promise<void> {
     try{
-        exec(`curl -o get_helm.sh ${HELM_SCRIPT_URL}`, (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-            runHelmScript();
-        });
+        await exec.exec('curl', ['-o', 'get_helm.sh', HELM_SCRIPT_URL]);
     } catch (e){
         console.log(`exec error: ${e}`);
     }
@@ -29,44 +25,18 @@ export async function setupHelmViaShell(): Promise<void> {
 }
 
 export async function runHelmScript(): Promise<void> {
-    let superU = "";
+    let install_path = "";
+    let script_path = "./get_helm.sh";
 
     try{
-        if(!os.type().match(/^Win/)){
-            superU = "sudo ./";
-            exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
-        } else {
-            console.log("WINDOWS \n");
-            exec("choco version", (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
-            exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
-        }
+        await exec.exec('chmod', ['700', 'get_helm.sh']);
 
         if(INPUT_VERSION == "latest"){
-            exec(util.format('%sget_helm.sh', superU), (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
+            await exec.exec(script_path);
         } else {
-            if(INPUT_VERSION[0] !== 'v'){
-                exec(util.format('%sget_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
-            } else {
-                exec(util.format('%sget_helm.sh --version %s}',superU, INPUT_VERSION), (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
-            }
+            INPUT_VERSION[0] !== 'v' ?
+                await exec.exec(script_path, ['--version', "v" + INPUT_VERSION]) :
+                await exec.exec(script_path, ['--version', INPUT_VERSION])
         }
     } catch(e){
         console.log(`exec error: ${e}`);
