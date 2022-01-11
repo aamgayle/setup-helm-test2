@@ -61,7 +61,6 @@ export async function downloadHelmScript(): Promise<string> {
 }
 
 export async function runHelmScript(): Promise<void> {
-    let results = await downloadHelmScript();
     try{
         exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
             console.log(stdout);

@@ -1652,7 +1652,6 @@ function downloadHelmScript() {
 exports.downloadHelmScript = downloadHelmScript;
 function runHelmScript() {
     return __awaiter(this, void 0, void 0, function* () {
-        let results = yield downloadHelmScript();
         try {
             (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                 console.log(stdout);
