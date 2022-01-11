@@ -1589,7 +1589,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getHelmTry = exports.run = void 0;
+exports.runHelmScript = exports.downloadHelmScript = exports.run = void 0;
 const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(728));
 const child_process_1 = __nccwpck_require__(81);
@@ -1622,8 +1622,9 @@ function run() {
         //     console.log(stderr);
         // });
         try {
-            let result = getHelmTry();
-            console.log(result);
+            downloadHelmScript();
+            runHelmScript();
+            console.log("COMPLETE");
         }
         catch (e) {
             throw new Error(util.format("Failed to run bash scripts from %s", "getHelmTry()"));
@@ -1631,7 +1632,7 @@ function run() {
     });
 }
 exports.run = run;
-function getHelmTry() {
+function downloadHelmScript() {
     return __awaiter(this, void 0, void 0, function* () {
         let getHelmScriptPath;
         try {
@@ -1640,6 +1641,18 @@ function getHelmTry() {
                 console.log(stdout);
                 console.log(stderr);
             });
+        }
+        catch (e) {
+            console.log(`exec error: ${e}`);
+            throw new Error("NOT DOWNLOADED");
+        }
+        return;
+    });
+}
+exports.downloadHelmScript = downloadHelmScript;
+function runHelmScript() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
             (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
@@ -1657,12 +1670,11 @@ function getHelmTry() {
         }
         catch (e) {
             console.log(`exec error: ${e}`);
-            throw new Error("NOT COMPLETE");
+            throw new Error("NOT RUN");
         }
-        return "COMPLETE";
     });
 }
-exports.getHelmTry = getHelmTry;
+exports.runHelmScript = runHelmScript;
 // export async function getHelmTry(): Promise<string> {
 //     let getHelmScriptPath;
 //     try{

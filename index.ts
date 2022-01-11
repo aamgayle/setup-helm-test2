@@ -36,14 +36,15 @@ export async function run() {
     //     console.log(stderr);
     // });
     try{
-        let result = getHelmTry();
-        console.log(result);
+        downloadHelmScript();
+        runHelmScript();
+        console.log("COMPLETE");
     } catch(e){
         throw new Error(util.format("Failed to run bash scripts from %s", "getHelmTry()"));
     }
 }
 
-export async function getHelmTry(): Promise<string> {
+export async function downloadHelmScript(): Promise<void> {
     let getHelmScriptPath;
 
     try{
@@ -52,6 +53,15 @@ export async function getHelmTry(): Promise<string> {
             console.log(stdout);
             console.log(stderr);
         });
+    } catch (e){
+        console.log(`exec error: ${e}`);
+        throw new Error("NOT DOWNLOADED");
+    }
+    return;
+}
+
+export async function runHelmScript(): Promise<void> {
+    try{
         exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
@@ -66,14 +76,11 @@ export async function getHelmTry(): Promise<string> {
             console.log(stdout);
             console.log(stderr);
         });
-    } catch (e){
+    } catch(e){
         console.log(`exec error: ${e}`);
-        throw new Error("NOT COMPLETE");
+        throw new Error("NOT RUN")
     }
-    
-    return "COMPLETE";
 }
-
 // export async function getHelmTry(): Promise<string> {
 //     let getHelmScriptPath;
 
