@@ -4,7 +4,7 @@ inputs:
   version:
     description: 'Version of helm'
     required: true
-    default: 'v3.5.0'
+    default: '3.6.0'
   token:
     description: 'Github token'
     default: ${{ github.token }}

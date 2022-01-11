@@ -34,17 +34,24 @@ export async function runHelmScript(): Promise<void> {
             console.log(stderr);
         });
 
-        if(INPUT_VERSION == "x"){
+        if(INPUT_VERSION == "latest"){
             exec('./get_helm.sh', (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
             });
         } else {
-            console.log(INPUT_VERSION);
-            exec(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
+            if(INPUT_VERSION[0] !== 'v'){
+                exec(`./get_helm.sh --version v${INPUT_VERSION}`, (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            } else {
+                exec(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
+            
         }
         
     } catch(e){
