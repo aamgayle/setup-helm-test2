@@ -18,13 +18,19 @@ export async function run() {
     // } catch {
     //     console.log("Try failed!");
     // }
+
     try{
         helmPath = tc.find(helmToolName, 'v.3.7.2');
         console.log("This is the helmPath " + helmPath);
+        exec(util.format('curl -fsSL -o get_helm.sh %s', getHelmDownloadUrl), (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+        });
         exec('ls', (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
         });
+        
     } catch (e) {
         console.log("error while trying to find helm path");
         throw new Error("HELM PATH CANNOT BE FOUND");
@@ -35,7 +41,7 @@ export async function getHelmTry(): Promise<string> {
     let getHelmScriptPath;
 
     try{
-        getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl);
+        getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl, "./");
     } catch(e){
         throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
     }

@@ -5462,6 +5462,10 @@ function run() {
         try {
             helmPath = tc.find(helmToolName, 'v.3.7.2');
             console.log("This is the helmPath " + helmPath);
+            (0, child_process_1.exec)(util.format('curl -fsSL -o get_helm.sh %s', getHelmDownloadUrl), (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
             (0, child_process_1.exec)('ls', (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
@@ -5478,7 +5482,7 @@ function getHelmTry() {
     return __awaiter(this, void 0, void 0, function* () {
         let getHelmScriptPath;
         try {
-            getHelmScriptPath = yield tc.downloadTool(getHelmDownloadUrl);
+            getHelmScriptPath = yield tc.downloadTool(getHelmDownloadUrl, "./");
         }
         catch (e) {
             throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
