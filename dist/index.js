@@ -1593,9 +1593,8 @@ exports.runHelmScript = exports.setupHelmViaShell = exports.run = void 0;
 const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(728));
 const child_process_1 = __nccwpck_require__(81);
-const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
-const helmToolName = "helm";
-const INPUT_VERSION = "v3.6.0";
+const HELM_SCRIPT_URL = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
+const INPUT_VERSION = core.getInput('version', { 'required': true });
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -1611,7 +1610,7 @@ exports.run = run;
 function setupHelmViaShell() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            (0, child_process_1.exec)("curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3", (error, stdout, stderr) => {
+            (0, child_process_1.exec)(`curl -o get_helm.sh ${HELM_SCRIPT_URL}`, (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
                 runHelmScript();

@@ -1,12 +1,9 @@
-import * as fs from 'fs';
-import * as tc from '@actions/tool-cache';
 import * as util from 'util';
 import * as core from '@actions/core'
 import {exec} from 'child_process';
 
-const getHelmDownloadUrl = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
-const helmToolName = "helm";
-const INPUT_VERSION:string = "v3.6.0";
+const HELM_SCRIPT_URL = 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3';
+const INPUT_VERSION:string = core.getInput('version', { 'required': true });
 
 export async function run() {
     try{
@@ -19,7 +16,7 @@ export async function run() {
 
 export async function setupHelmViaShell(): Promise<void> {
     try{
-        exec("curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3", (error, stdout, stderr) => {
+        exec(`curl -o get_helm.sh ${HELM_SCRIPT_URL}`, (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
             runHelmScript();
