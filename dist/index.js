@@ -1645,28 +1645,33 @@ function downloadHelmScript() {
             console.log(`exec error: ${e}`);
             throw new Error("NOT DOWNLOADED");
         }
-        return;
+        return "Proceed";
     });
 }
 exports.downloadHelmScript = downloadHelmScript;
 function runHelmScript() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield downloadHelmScript();
+        let results = yield downloadHelmScript();
         try {
-            (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
-            (0, child_process_1.exec)(`
-        if [ $version == "x" ] 
-        then 
-          ./get_helm.sh
-        else 
-          ./get_helm.sh --version v3.6.0
-        fi `, (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
+            if (results === "Proceed") {
+                (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+                (0, child_process_1.exec)(`
+            if [ $version == "x" ] 
+            then 
+                ./get_helm.sh
+            else 
+                ./get_helm.sh --version v3.6.0
+            fi `, (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
+            else {
+                console.log("FAILED");
+            }
         }
         catch (e) {
             console.log(`exec error: ${e}`);

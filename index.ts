@@ -43,7 +43,7 @@ export async function run() {
     }
 }
 
-export async function downloadHelmScript(): Promise<void> {
+export async function downloadHelmScript(): Promise<string> {
     let getHelmScriptPath;
 
     try{
@@ -56,26 +56,31 @@ export async function downloadHelmScript(): Promise<void> {
         console.log(`exec error: ${e}`);
         throw new Error("NOT DOWNLOADED");
     }
-    return;
+    return "Proceed";
 }
 
 export async function runHelmScript(): Promise<void> {
-    await downloadHelmScript();
+    let results = await downloadHelmScript();
     try{
-        exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-        });
-        exec(`
-        if [ $version == "x" ] 
-        then 
-          ./get_helm.sh
-        else 
-          ./get_helm.sh --version v3.6.0
-        fi `, (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-        });
+        if(results === "Proceed"){
+            exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+            exec(`
+            if [ $version == "x" ] 
+            then 
+                ./get_helm.sh
+            else 
+                ./get_helm.sh --version v3.6.0
+            fi `, (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+        } else {
+            console.log("FAILED")
+        }
+        
     } catch(e){
         console.log(`exec error: ${e}`);
         throw new Error("NOT RUN")
