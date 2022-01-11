@@ -33,7 +33,7 @@ export async function runHelmScript(): Promise<void> {
 
     try{
         if(!os.type().match(/^Win/)){
-            superU = "sudo";
+            superU = "sudo .";
             exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
@@ -47,18 +47,18 @@ export async function runHelmScript(): Promise<void> {
         }
 
         if(INPUT_VERSION == "latest"){
-            exec(util.format('%s./get_helm.sh', superU), (error, stdout, stderr) => {
+            exec(util.format('%s/get_helm.sh', superU), (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
             });
         } else {
             if(INPUT_VERSION[0] !== 'v'){
-                exec(util.format('%s./get_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
+                exec(util.format('%s/get_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             } else {
-                exec(util.format('%s./get_helm.sh --version %s}',superU, INPUT_VERSION), (error, stdout, stderr) => {
+                exec(util.format('%s/get_helm.sh --version %s}',superU, INPUT_VERSION), (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });

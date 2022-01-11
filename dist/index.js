@@ -1629,7 +1629,7 @@ function runHelmScript() {
         let superU = "";
         try {
             if (!os.type().match(/^Win/)) {
-                superU = "sudo";
+                superU = "sudo .";
                 (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
@@ -1643,20 +1643,20 @@ function runHelmScript() {
                 });
             }
             if (INPUT_VERSION == "latest") {
-                (0, child_process_1.exec)(util.format('%s./get_helm.sh', superU), (error, stdout, stderr) => {
+                (0, child_process_1.exec)(util.format('%s/get_helm.sh', superU), (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             }
             else {
                 if (INPUT_VERSION[0] !== 'v') {
-                    (0, child_process_1.exec)(util.format('%s./get_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(util.format('%s/get_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });
                 }
                 else {
-                    (0, child_process_1.exec)(util.format('%s./get_helm.sh --version %s}', superU, INPUT_VERSION), (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(util.format('%s/get_helm.sh --version %s}', superU, INPUT_VERSION), (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });
