@@ -1637,6 +1637,10 @@ function runHelmScript() {
             }
             else {
                 console.log("WINDOWS \n");
+                (0, child_process_1.exec)("echo `uname`|tr '[:upper:]' '[:lower:]'", (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
                 (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);

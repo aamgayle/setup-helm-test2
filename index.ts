@@ -40,6 +40,10 @@ export async function runHelmScript(): Promise<void> {
             });
         } else {
             console.log("WINDOWS \n");
+            exec("echo `uname`|tr '[:upper:]' '[:lower:]'", (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
             exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
