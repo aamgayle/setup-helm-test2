@@ -12,7 +12,7 @@ jobs:
       - run: | 
           curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
-          if [ $version -eq "x" ] 
+          if [ $version == "x" ] 
           then 
             ./get_helm.sh
           else 
