@@ -1590,6 +1590,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.runHelmScript = exports.setupHelmViaShell = exports.run = void 0;
+const os = __importStar(__nccwpck_require__(37));
 const util = __importStar(__nccwpck_require__(837));
 const core = __importStar(__nccwpck_require__(728));
 const child_process_1 = __nccwpck_require__(81);
@@ -1625,26 +1626,37 @@ function setupHelmViaShell() {
 exports.setupHelmViaShell = setupHelmViaShell;
 function runHelmScript() {
     return __awaiter(this, void 0, void 0, function* () {
+        let superU = "";
         try {
-            (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
+            if (!os.type().match(/^Win/)) {
+                superU = "sudo";
+                (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
+            else {
+                console.log("WINDOWS \n");
+                (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                    console.log(stdout);
+                    console.log(stderr);
+                });
+            }
             if (INPUT_VERSION == "latest") {
-                (0, child_process_1.exec)('sudo ./get_helm.sh', (error, stdout, stderr) => {
+                (0, child_process_1.exec)(util.format('%s./get_helm.sh', superU), (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             }
             else {
                 if (INPUT_VERSION[0] !== 'v') {
-                    (0, child_process_1.exec)(`sudo ./get_helm.sh --version v${INPUT_VERSION}`, (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(util.format('%s./get_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });
                 }
                 else {
-                    (0, child_process_1.exec)(`sudo ./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(util.format('%s./get_helm.sh --version %s}', superU, INPUT_VERSION), (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });

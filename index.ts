@@ -1,3 +1,4 @@
+import * as os from 'os';
 import * as util from 'util';
 import * as core from '@actions/core'
 import {exec} from 'child_process';
@@ -28,30 +29,40 @@ export async function setupHelmViaShell(): Promise<void> {
 }
 
 export async function runHelmScript(): Promise<void> {
+    let superU = "";
+
     try{
-        exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-        });
+        if(!os.type().match(/^Win/)){
+            superU = "sudo";
+            exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+        } else {
+            console.log("WINDOWS \n");
+            exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+            });
+        }
 
         if(INPUT_VERSION == "latest"){
-            exec('sudo ./get_helm.sh', (error, stdout, stderr) => {
+            exec(util.format('%s./get_helm.sh', superU), (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
             });
         } else {
             if(INPUT_VERSION[0] !== 'v'){
-                exec(`sudo ./get_helm.sh --version v${INPUT_VERSION}`, (error, stdout, stderr) => {
+                exec(util.format('%s./get_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             } else {
-                exec(`sudo ./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
+                exec(util.format('%s./get_helm.sh --version %s}',superU, INPUT_VERSION), (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             }
-            
         }
         
     } catch(e){
