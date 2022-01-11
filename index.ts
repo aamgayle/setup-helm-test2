@@ -40,6 +40,7 @@ export async function runHelmScript(): Promise<void> {
                 console.log(stderr);
             });
         } else {
+            console.log(INPUT_VERSION);
             exec(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);

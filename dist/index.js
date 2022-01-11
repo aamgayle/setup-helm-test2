@@ -1637,6 +1637,7 @@ function runHelmScript() {
                 });
             }
             else {
+                console.log(INPUT_VERSION);
                 (0, child_process_1.exec)(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
