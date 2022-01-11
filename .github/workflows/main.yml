@@ -12,10 +12,14 @@ jobs:
       - run: | 
           curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
-          ./get_helm.sh --version $version
+          if [ $version == "x" ]
+          then
+            ./get_helm.sh
+          else
+            ./get_helm.sh --version $version
         shell: bash
         env:
-          version: "latest" #Add desired version in format "vX.X.X" otherwise will default to latest helm version      - name: Setup Helm
+          version: "x" #Add desired version in format "vX.X.X" otherwise will default to latest helm version
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
