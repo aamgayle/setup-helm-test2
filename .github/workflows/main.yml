@@ -17,7 +17,7 @@ jobs:
       - run: |
           helm version
         shell: bash
-  ubuntu-18.04-test:
+  ubuntu-18-04-test:
     runs-on: ubuntu-18.04
     name: A job to install helm on an Ubuntu 18.04 runner
     steps:
@@ -49,7 +49,7 @@ jobs:
       - run: |
           helm version
         shell: bash
-  macOS-10.15-test:
+  macOS-10-15-test:
     runs-on: macos-10.15
     name: A job to install helm on a macOS 10.15 runner
     steps:
