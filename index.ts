@@ -40,7 +40,7 @@ export async function runHelmScript(): Promise<void> {
             });
         } else {
             console.log("WINDOWS \n");
-            exec("echo `uname`|tr '[:upper:]' '[:lower:]'", (error, stdout, stderr) => {
+            exec("choco version", (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
             });
@@ -68,7 +68,6 @@ export async function runHelmScript(): Promise<void> {
                 });
             }
         }
-        
     } catch(e){
         console.log(`exec error: ${e}`);
         throw new Error("NOT RUN")
