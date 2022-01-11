@@ -19,22 +19,28 @@ export async function run() {
     //     console.log("Try failed!");
     // }
 
-    try{
-        helmPath = tc.find(helmToolName, 'v.3.7.2');
-        console.log("This is the helmPath " + helmPath);
-        await exec("helm version", (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-        });
-    } catch (e) {
-        console.log("error while trying to find helm path");
-        throw new Error("HELM PATH CANNOT BE FOUND");
-    }
+    // try{
+    //     helmPath = tc.find(helmToolName, 'v.3.7.2');
+    //     console.log("This is the helmPath " + helmPath);
+    //     await exec("helm version", (error, stdout, stderr) => {
+    //         console.log(stdout);
+    //         console.log(stderr);
+    //     });
+    // } catch (e) {
+    //     console.log("error while trying to find helm path");
+    //     throw new Error("HELM PATH CANNOT BE FOUND");
+    // }
 
-    exec('ls', (error, stdout, stderr) => {
-        console.log(stdout);
-        console.log(stderr);
-    });
+    // exec('ls', (error, stdout, stderr) => {
+    //     console.log(stdout);
+    //     console.log(stderr);
+    // });
+    try{
+        let result = getHelmTry();
+        console.log(result);
+    } catch(e){
+        throw new Error(util.format("Failed to run bash scripts from %s", "getHelmTry()"));
+    }
 }
 
 export async function getHelmTry(): Promise<string> {
