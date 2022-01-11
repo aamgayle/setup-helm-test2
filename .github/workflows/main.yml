@@ -3,14 +3,14 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to install helm
+    name: A job to install helm on Ubuntu
+    input:
+      version: "3.5.0"
     steps:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          version: "v3.5.0" #Add desired version in format "vX.X.X" otherwise will default to latest helm version
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
