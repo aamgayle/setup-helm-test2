@@ -9,6 +9,7 @@ const INPUT_VERSION:string = core.getInput('version', { 'required': true });
 export async function run() {
     try{
         setupHelmViaShell();
+        runHelmScript();
         console.log("COMPLETE");
     } catch(e){
         throw new Error(util.format("Failed to run bash scripts from %s", "getHelmTry()"));
@@ -18,7 +19,6 @@ export async function run() {
 export async function setupHelmViaShell(): Promise<void> {
     try{
         await exec.exec('curl', ['-o', 'get_helm.sh', HELM_SCRIPT_URL]);
-        await exec.exec('ls');
     } catch (e){
         console.log(`exec error: ${e}`);
     }
@@ -26,7 +26,6 @@ export async function setupHelmViaShell(): Promise<void> {
 }
 
 export async function runHelmScript(): Promise<void> {
-    let install_path = "";
     let script_path = "./get_helm.sh";
 
     try{

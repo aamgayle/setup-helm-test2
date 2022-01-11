@@ -2866,6 +2866,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             setupHelmViaShell();
+            runHelmScript();
             console.log("COMPLETE");
         }
         catch (e) {
@@ -2878,7 +2879,6 @@ function setupHelmViaShell() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield exec.exec('curl', ['-o', 'get_helm.sh', HELM_SCRIPT_URL]);
-            yield exec.exec('ls');
         }
         catch (e) {
             console.log(`exec error: ${e}`);
@@ -2889,7 +2889,6 @@ function setupHelmViaShell() {
 exports.setupHelmViaShell = setupHelmViaShell;
 function runHelmScript() {
     return __awaiter(this, void 0, void 0, function* () {
-        let install_path = "";
         let script_path = "./get_helm.sh";
         try {
             yield exec.exec('chmod', ['700', 'get_helm.sh']);
