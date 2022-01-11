@@ -22,7 +22,7 @@ export async function run() {
     try{
         helmPath = tc.find(helmToolName, 'v.3.7.2');
         console.log("This is the helmPath " + helmPath);
-        await exec(util.format('curl -o get_helm.sh %s', getHelmDownloadUrl), (error, stdout, stderr) => {
+        await exec("helm version", (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
         });
