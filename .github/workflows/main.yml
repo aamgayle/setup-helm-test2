@@ -65,7 +65,7 @@ jobs:
       - run: |
           helm version
         shell: bash
-    macOS-latest-test:
+  macOS-latest-test:
     runs-on: macos-latest
     name: A job to install helm on a macOS latest runner
     steps:
