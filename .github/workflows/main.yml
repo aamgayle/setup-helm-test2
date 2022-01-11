@@ -14,8 +14,8 @@ jobs:
           chmod 700 get_helm.sh
           ./get_helm.sh --version $version
         shell: bash
-      - name: Setup Helm
+        env:
+          version: v3.6.0 #Add desired version in format "vX.X.X" otherwise will default to latest helm version      - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
-        with:
-          version: v3.6.0 #Add desired version in format "vX.X.X" otherwise will default to latest helm version
+        
