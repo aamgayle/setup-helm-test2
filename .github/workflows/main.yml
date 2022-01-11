@@ -81,3 +81,19 @@ jobs:
       - run: |
           helm version
         shell: bash
+    windows-latest-test:
+    runs-on: windows-2022
+    name: A job to install helm on a windows 2022 runner
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Helm
+        uses: ./ # Uses an action in the root directory
+        id: hello
+        with:
+          version: "3.5.0"
+      - run: |
+          helm version
+        shell: bash
