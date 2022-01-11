@@ -47,12 +47,6 @@ export async function getHelmTry(): Promise<string> {
     let getHelmScriptPath;
 
     try{
-        getHelmScriptPath =  await tc.downloadTool(getHelmDownloadUrl, "./");
-    } catch(e){
-        throw new Error(util.format("Failed to download get_helm.sh from locations: %s", getHelmDownloadUrl));
-    }
-
-    try{
         console.log(process.cwd());
         exec("curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3", (error, stdout, stderr) => {
             console.log(stdout);
