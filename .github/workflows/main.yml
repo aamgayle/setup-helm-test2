@@ -12,7 +12,7 @@ jobs:
       - run: | 
           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
           chmod 700 get_helm.sh
-          snap list
+          apt list
         shell: bash
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
