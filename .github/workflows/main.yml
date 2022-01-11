@@ -4,8 +4,6 @@ jobs:
   hello_world_job:
     runs-on: ubuntu-latest
     name: A job to install helm on Ubuntu
-    inputs:
-      version: "3.5.0"
     steps:
       # To use this repository's private action,
       # you must check out the repository
@@ -14,6 +12,8 @@ jobs:
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
+        with:
+          version: "3.5.0"
       - run: |
           helm version
         shell: bash
