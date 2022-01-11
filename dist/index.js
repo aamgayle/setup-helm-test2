@@ -5462,7 +5462,7 @@ function run() {
         try {
             helmPath = tc.find(helmToolName, 'v.3.7.2');
             console.log("This is the helmPath " + helmPath);
-            (0, child_process_1.exec)(util.format('bash %s', 'sudo file /usr/local/bin/helm'), (error, stdout, stderr) => {
+            (0, child_process_1.exec)(util.format('bash %s', 'ls'), (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
             });

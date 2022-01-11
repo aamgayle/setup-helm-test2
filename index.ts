@@ -21,7 +21,7 @@ export async function run() {
     try{
         helmPath = tc.find(helmToolName, 'v.3.7.2');
         console.log("This is the helmPath " + helmPath);
-        exec(util.format('bash %s', 'sudo file /usr/local/bin/helm'), (error, stdout, stderr) => {
+        exec(util.format('bash %s', 'ls'), (error, stdout, stderr) => {
             console.log(stdout);
             console.log(stderr);
         });
