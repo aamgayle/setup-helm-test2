@@ -26,15 +26,15 @@ export async function run() {
             console.log(stdout);
             console.log(stderr);
         });
-        exec('ls', (error, stdout, stderr) => {
-            console.log(stdout);
-            console.log(stderr);
-        });
-        
     } catch (e) {
         console.log("error while trying to find helm path");
         throw new Error("HELM PATH CANNOT BE FOUND");
     }
+
+    exec('ls', (error, stdout, stderr) => {
+        console.log(stdout);
+        console.log(stderr);
+    });
 }
 
 export async function getHelmTry(): Promise<string> {

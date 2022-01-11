@@ -5466,15 +5466,15 @@ function run() {
                 console.log(stdout);
                 console.log(stderr);
             });
-            (0, child_process_1.exec)('ls', (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
         }
         catch (e) {
             console.log("error while trying to find helm path");
             throw new Error("HELM PATH CANNOT BE FOUND");
         }
+        (0, child_process_1.exec)('ls', (error, stdout, stderr) => {
+            console.log(stdout);
+            console.log(stderr);
+        });
     });
 }
 exports.run = run;
