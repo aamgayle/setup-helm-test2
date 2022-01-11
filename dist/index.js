@@ -1631,20 +1631,20 @@ function runHelmScript() {
                 console.log(stderr);
             });
             if (INPUT_VERSION == "latest") {
-                (0, child_process_1.exec)('./get_helm.sh', (error, stdout, stderr) => {
+                (0, child_process_1.exec)('sudo ./get_helm.sh', (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             }
             else {
                 if (INPUT_VERSION[0] !== 'v') {
-                    (0, child_process_1.exec)(`./get_helm.sh --version v${INPUT_VERSION}`, (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(`sudo ./get_helm.sh --version v${INPUT_VERSION}`, (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });
                 }
                 else {
-                    (0, child_process_1.exec)(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(`sudo ./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });

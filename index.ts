@@ -35,18 +35,18 @@ export async function runHelmScript(): Promise<void> {
         });
 
         if(INPUT_VERSION == "latest"){
-            exec('./get_helm.sh', (error, stdout, stderr) => {
+            exec('sudo ./get_helm.sh', (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);
             });
         } else {
             if(INPUT_VERSION[0] !== 'v'){
-                exec(`./get_helm.sh --version v${INPUT_VERSION}`, (error, stdout, stderr) => {
+                exec(`sudo ./get_helm.sh --version v${INPUT_VERSION}`, (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             } else {
-                exec(`./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
+                exec(`sudo ./get_helm.sh --version ${INPUT_VERSION}`, (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
