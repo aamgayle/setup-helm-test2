@@ -1,84 +1,109 @@
+# on: [push]
+
+# jobs:
+#   ubuntu-latest-test:
+#     runs-on: ubuntu-latest
+#     name: A job to install helm on a Ubuntu latest runner
+#     steps:
+#       # To use this repository's private action,
+#       # you must check out the repository
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Setup Helm
+#         uses: ./ # Uses an action in the root directory
+#         id: hello
+#         with:
+#           version: "3.5.0"
+#       - run: |
+#           helm version
+#         shell: bash
+#   ubuntu-18-04-test:
+#     runs-on: ubuntu-18.04
+#     name: A job to install helm on an Ubuntu 18.04 runner
+#     steps:
+#       # To use this repository's private action,
+#       # you must check out the repository
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Setup Helm
+#         uses: ./ # Uses an action in the root directory
+#         id: hello
+#         with:
+#           version: "3.5.0"
+#       - run: |
+#           helm version
+#         shell: bash
+#   macOS-11-test:
+#     runs-on: macos-11
+#     name: A job to install helm on a macOS 11 runner
+#     steps:
+#       # To use this repository's private action,
+#       # you must check out the repository
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Setup Helm
+#         uses: ./ # Uses an action in the root directory
+#         id: hello
+#         with:
+#           version: "3.5.0"
+#       - run: |
+#           helm version
+#         shell: bash
+#   macOS-10-15-test:
+#     runs-on: macos-10.15
+#     name: A job to install helm on a macOS 10.15 runner
+#     steps:
+#       # To use this repository's private action,
+#       # you must check out the repository
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Setup Helm
+#         uses: ./ # Uses an action in the root directory
+#         id: hello
+#         with:
+#           version: "3.5.0"
+#       - run: |
+#           helm version
+#         shell: bash
+#   macOS-latest-test:
+#     runs-on: macos-latest
+#     name: A job to install helm on a macOS latest runner
+#     steps:
+#       # To use this repository's private action,
+#       # you must check out the repository
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Setup Helm
+#         uses: ./ # Uses an action in the root directory
+#         id: hello
+#         with:
+#           version: "3.5.0"
+#       - run: |
+#           helm version
+#         shell: bash
 on: [push]
 
 jobs:
-  ubuntu-latest-test:
+  hello_world_job:
     runs-on: windows-latest
-    name: A job to install helm on a Windows latest runner
+    name: A job to install helm
     steps:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
+      - run: | 
+          curl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          if [ $version == "x" ] 
+          then 
+            ./get_helm.sh
+          else 
+            ./get_helm.sh --version $version
+          fi 
+        shell: bash
+        env:
+          version: "v3.6.0" #Add desired version in format "vX.X.X" otherwise will default to latest helm version
       - name: Setup Helm
         uses: ./ # Uses an action in the root directory
         id: hello
-        with:
-          version: "3.5.0"
-        shell: bash
-      - run: |
-          helm version
-        shell: bash
-  # ubuntu-18-04-test:
-  #   runs-on: ubuntu-18.04
-  #   name: A job to install helm on an Ubuntu 18.04 runner
-  #   steps:
-  #     # To use this repository's private action,
-  #     # you must check out the repository
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Setup Helm
-  #       uses: ./ # Uses an action in the root directory
-  #       id: hello
-  #       with:
-  #         version: "3.5.0"
-  #     - run: |
-  #         helm version
-  #       shell: bash
-  # macOS-11-test:
-  #   runs-on: macos-11
-  #   name: A job to install helm on a macOS 11 runner
-  #   steps:
-  #     # To use this repository's private action,
-  #     # you must check out the repository
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Setup Helm
-  #       uses: ./ # Uses an action in the root directory
-  #       id: hello
-  #       with:
-  #         version: "3.5.0"
-  #     - run: |
-  #         helm version
-  #       shell: bash
-  # macOS-10-15-test:
-  #   runs-on: macos-10.15
-  #   name: A job to install helm on a macOS 10.15 runner
-  #   steps:
-  #     # To use this repository's private action,
-  #     # you must check out the repository
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Setup Helm
-  #       uses: ./ # Uses an action in the root directory
-  #       id: hello
-  #       with:
-  #         version: "3.5.0"
-  #     - run: |
-  #         helm version
-  #       shell: bash
-  # macOS-latest-test:
-  #   runs-on: macos-latest
-  #   name: A job to install helm on a macOS latest runner
-  #   steps:
-  #     # To use this repository's private action,
-  #     # you must check out the repository
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Setup Helm
-  #       uses: ./ # Uses an action in the root directory
-  #       id: hello
-  #       with:
-  #         version: "3.5.0"
-  #     - run: |
-  #         helm version
-  #       shell: bash
