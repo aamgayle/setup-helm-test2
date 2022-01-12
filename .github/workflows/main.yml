@@ -97,9 +97,9 @@ jobs:
           chmod 700 get_helm.sh
           if [ $version == "x" ] 
           then 
-            ./get_helm.sh
+            ./get_helm.sh --no-sudo
           else 
-            ./get_helm.sh --version $version
+            ./get_helm.sh --version $version --no-sudo
           fi 
         shell: bash
         env:
