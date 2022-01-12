@@ -39,11 +39,7 @@ export async function runHelmScript(): Promise<void> {
                 console.log(stderr);
             });
         } else {
-            console.log("WINDOWS \n");
-            exec("choco version", (error, stdout, stderr) => {
-                console.log(stdout);
-                console.log(stderr);
-            });
+            superU = "Bash ";
             exec("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                 console.log(stdout);
                 console.log(stderr);

@@ -1636,11 +1636,7 @@ function runHelmScript() {
                 });
             }
             else {
-                console.log("WINDOWS \n");
-                (0, child_process_1.exec)("choco version", (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
+                superU = "Bash ";
                 (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
