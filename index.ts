@@ -8,8 +8,7 @@ const INPUT_VERSION:string = core.getInput('version', { 'required': true });
 
 export async function run() {
     try{
-        setupHelmViaShell();
-        runHelmScript();
+        setupHelmViaShell().then(runHelmScript);
         console.log("COMPLETE");
     } catch(e){
         throw new Error(util.format("Failed to run bash scripts from %s", "getHelmTry()"));
@@ -25,24 +24,23 @@ export async function setupHelmViaShell(): Promise<void> {
     return;
 }
 
-export async function runHelmScript(): Promise<void> {
+export function runHelmScript(){
     let script_path = "./get_helm.sh";
 
     try{
-        await exec.exec('chmod', ['700', 'get_helm.sh']);
+        exec.exec('chmod', ['700', 'get_helm.sh']);
 
         if(INPUT_VERSION == "latest"){
-            await exec.exec(script_path);
+            exec.exec(script_path);
         } else {
             INPUT_VERSION[0] !== 'v' ?
-                await exec.exec(script_path, ['--version', "v" + INPUT_VERSION]) :
-                await exec.exec(script_path, ['--version', INPUT_VERSION])
+                exec.exec(script_path, ['--version', "v" + INPUT_VERSION]) :
+                exec.exec(script_path, ['--version', INPUT_VERSION])
         }
     } catch(e){
         console.log(`exec error: ${e}`);
-        throw new Error("NOT RUN")
+        throw new Error("NOT RUN");
     }
-    return;
 }
 
 run().catch(core.setFailed);

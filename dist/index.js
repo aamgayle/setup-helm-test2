@@ -2865,8 +2865,7 @@ const INPUT_VERSION = core.getInput('version', { 'required': true });
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            setupHelmViaShell();
-            runHelmScript();
+            setupHelmViaShell().then(runHelmScript);
             console.log("COMPLETE");
         }
         catch (e) {
@@ -2888,25 +2887,22 @@ function setupHelmViaShell() {
 }
 exports.setupHelmViaShell = setupHelmViaShell;
 function runHelmScript() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let script_path = "./get_helm.sh";
-        try {
-            yield exec.exec('chmod', ['700', 'get_helm.sh']);
-            if (INPUT_VERSION == "latest") {
-                yield exec.exec(script_path);
-            }
-            else {
-                INPUT_VERSION[0] !== 'v' ?
-                    yield exec.exec(script_path, ['--version', "v" + INPUT_VERSION]) :
-                    yield exec.exec(script_path, ['--version', INPUT_VERSION]);
-            }
+    let script_path = "./get_helm.sh";
+    try {
+        exec.exec('chmod', ['700', 'get_helm.sh']);
+        if (INPUT_VERSION == "latest") {
+            exec.exec(script_path);
         }
-        catch (e) {
-            console.log(`exec error: ${e}`);
-            throw new Error("NOT RUN");
+        else {
+            INPUT_VERSION[0] !== 'v' ?
+                exec.exec(script_path, ['--version', "v" + INPUT_VERSION]) :
+                exec.exec(script_path, ['--version', INPUT_VERSION]);
         }
-        return;
-    });
+    }
+    catch (e) {
+        console.log(`exec error: ${e}`);
+        throw new Error("NOT RUN");
+    }
 }
 exports.runHelmScript = runHelmScript;
 run().catch(core.setFailed);
