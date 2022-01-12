@@ -1627,36 +1627,34 @@ exports.setupHelmViaShell = setupHelmViaShell;
 function runHelmScript() {
     return __awaiter(this, void 0, void 0, function* () {
         let superU = "";
+        let noSudo = "";
         try {
-            if (!os.type().match(/^Win/)) {
+            if (os.type().match(/^Win/)) {
+                superU = "Bash ";
+                noSudo = "--no-sudo";
+            }
+            else {
                 superU = "sudo ./";
                 (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             }
-            else {
-                superU = "Bash ";
-                (0, child_process_1.exec)("chmod 700 get_helm.sh", (error, stdout, stderr) => {
-                    console.log(stdout);
-                    console.log(stderr);
-                });
-            }
             if (INPUT_VERSION == "latest") {
-                (0, child_process_1.exec)(util.format('%sget_helm.sh', superU), (error, stdout, stderr) => {
+                (0, child_process_1.exec)(util.format('%sget_helm.sh %s', superU, noSudo), (error, stdout, stderr) => {
                     console.log(stdout);
                     console.log(stderr);
                 });
             }
             else {
                 if (INPUT_VERSION[0] !== 'v') {
-                    (0, child_process_1.exec)(util.format('%sget_helm.sh --version v%s', superU, INPUT_VERSION), (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(util.format('%sget_helm.sh --version v%s %s', superU, INPUT_VERSION, noSudo), (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });
                 }
                 else {
-                    (0, child_process_1.exec)(util.format('%sget_helm.sh --version %s}', superU, INPUT_VERSION), (error, stdout, stderr) => {
+                    (0, child_process_1.exec)(util.format('%sget_helm.sh --version %s %s', superU, INPUT_VERSION, noSudo), (error, stdout, stderr) => {
                         console.log(stdout);
                         console.log(stderr);
                     });
